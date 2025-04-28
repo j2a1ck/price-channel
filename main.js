@@ -52,7 +52,7 @@ async function sendToChannel() {
     if (data) {
         const template = `
 🔵 بیت‌کوین:  {{BTC}} دلار
-🔵 تتر: {{USDT}} دلار
+🔵 تتر: {{USDT}} تومان
 `;
 
         const output = template

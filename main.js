@@ -43,19 +43,33 @@ bot.onText(/\/getdata/, async (msg) => {
     }
 });
 
+
+
+
 async function sendToChannel() {
     const data = await getJsonFromApi()
 
     if (data) {
-        const formattedData = `
-        بیت کوین: ${data.stats["btc-usdt"].latest}
-        تتر: ${data.stats["usdt-rls"].latest}
-        `
-        bot.sendMessage(channelId, formattedData)
+        const template = `
+🔵 بیت‌کوین:  {{BTC}} دلار
+🔵 تتر: {{USDT}} دلار
+`;
+
+        const output = template
+            .replace('{{BTC}}', data.stats["btc-usdt"].latest)
+            .replace('{{USDT}}', data.stats["usdt-rls"].latest);
+
+        console.log(output);
+
+        bot.sendMessage(channelId, output);
     } else {
-        bot.sendMessage(channelId, "not working")
+        bot.sendMessage(channelId, "Sorry, there was an issue fetching the data.");
     }
 }
 
+
 setInterval(sendToChannel, 3600000); // 1 hour = 3600000 ms
-sendToChannel(); 
+sendToChannel();
+
+
+export { getJsonFromApi }
